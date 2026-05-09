@@ -133,7 +133,7 @@ where age < 26;
 SELECT * FROM T_TAB1 t
 JOIN T_TAB2 t2 ON t2.name = t.seller_name
 WHERE t2.name = 'RITA';
-#0 строкuk_bankSurnameCustomer_ID
+#0 строкuk_bankSurnameCustomer_ID 
 
 
 
