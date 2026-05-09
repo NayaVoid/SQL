@@ -1,9 +1,12 @@
-#1
+#1 
+ Markdown
+'''sql
 select count(distinct user_id)
 from users
 where dates between '2023-11-07' and '2023-11-15';
 
 select dates from users;
+'''
 
 #2
 select user_id, sum(view_adverts) as sum_adv
