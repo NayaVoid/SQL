@@ -13,7 +13,7 @@ select dates from users;
 ```
 
 #2
-select user_id, sum(view_adverts) as sum_adv
+```select user_id, sum(view_adverts) as sum_adv
 from users
 group by user_id
 order by sum_adv desc
@@ -141,7 +141,7 @@ SELECT * FROM T_TAB1 t
 JOIN T_TAB2 t2 ON t2.name = t.seller_name
 WHERE t2.name = 'RITA';
 #0 строкuk_bankSurnameCustomer_ID 
-
+```
 
 
 
