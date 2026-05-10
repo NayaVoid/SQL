@@ -18,7 +18,8 @@ select user_id, sum(view_adverts) as sum_adv
 from users
 group by user_id
 order by sum_adv desc
-limit 1;```
+limit 1;
+```
 
 #3
 ```sql select dates, avg(view_adverts), count(distinct user_id)
@@ -26,13 +27,15 @@ from users
 group by dates
 having count(distinct user_id)> 500
 order by avg(view_adverts) desc
-limit 1; ```
+limit 1;
+```
 
 #4
 ```sql select user_id, count(distinct dates) as LT
 from users
 group by user_id
-order by LT desc; ```
+order by LT desc;
+```
 
 #5
 ```sql select user_id, avg(view_adverts), count(distinct dates)
@@ -40,7 +43,8 @@ from users
 group by user_id
 having count(distinct dates) >= 5
 order by avg(view_adverts) desc
-limit 1;```
+limit 1;
+```
 
 #2.1
 ```sql create database mini_project;
@@ -95,21 +99,25 @@ select count(distinct goods_type) from t_tab1;
 #2.2
 ```sql select sum(amount), sum(quantity)
 from t_tab1
-where goods_type = 'mobile phone'; ```
+where goods_type = 'mobile phone';
+```
 
 #2.3
 ```sql select name, salary
 from t_tab2
-where salary > 100000;```
+where salary > 100000;
+```
 
 #2.4
 ```sql select min(salary), max(salary), min(age), max(age)
-from t_tab2; ```
+from t_tab2;
+```
 
 #2.5
 ```sql select avg(quantity)
 from t_tab1
-where goods_type in ('keyboard',' printer');```
+where goods_type in ('keyboard',' printer');
+```
 
 #2.6
 ```sql select name, sum(amount)
@@ -123,19 +131,22 @@ group by t2.name;
 from t_tab1 t1
 join t_tab2 t2
 on t1.seller_name = t2.name 
-where name = 'MIKE'; ```
+where name = 'MIKE';
+```
 
 #2.8
 ```sql select t2.name, t2.age
 from t_tab2 t2
  left join t_tab1 t1
 on t1.SELLER_NAME = t2.NAME
-where t1.id is null;```
+where t1.id is null;
+```
 
 #2.9
 ```sql select name ,salary, age
 from t_tab2
-where age < 26;```
+where age < 26;
+```
 
 #2.10
 ```sql SELECT * FROM T_TAB1 t
