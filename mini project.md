@@ -1,8 +1,7 @@
-Markdown
-	#Mini project
+# Mini project
 
 
-##1 
+### 1 Выводим количество пользователей в периоде
  Markdown
 ```sql
 select count(distinct user_id)
@@ -12,7 +11,7 @@ where dates between '2023-11-07' and '2023-11-15';
 select dates from users;
 ```
 
-#2
+### 2 Определили пользователя, который за весь перио посмотрел наибольшее количество обьявлении
 ```sql
 select user_id, sum(view_adverts) as sum_adv
 from users
@@ -21,7 +20,7 @@ order by sum_adv desc
 limit 1;
 ```
 
-#3
+# 3 Дни с наибольшим средним количеством просмотренных рекламных обьявлении на пользователя, но учитываем только дни с более чем 500 уникальными пользователями
 ```sql select dates, avg(view_adverts), count(distinct user_id)
 from users
 group by dates
@@ -30,14 +29,14 @@ order by avg(view_adverts) desc
 limit 1;
 ```
 
-#4
+# 4 Продолжительност ьприсутствия пользователя на сайте
 ```sql select user_id, count(distinct dates) as LT
 from users
 group by user_id
 order by LT desc;
 ```
 
-#5
+# 5 Для каждого пользователя подситаем среднее кол. просмотренной рекламы за день, затем выясняем, у кого самый самый высокий сред. показатель среди тех, кто был активенкак мин. 5 разных дней
 ```sql select user_id, avg(view_adverts), count(distinct dates)
 from users
 group by user_id
@@ -46,7 +45,7 @@ order by avg(view_adverts) desc
 limit 1;
 ```
 
-#2.1
+# 2.1
 ```sql create database mini_project;
 
 create table T_TAB1(
@@ -92,41 +91,43 @@ values
 (3, 'MIKE', 120000, 25),
 (4, 'JOE', 120000, 25),
 (5, 'RITA', 120000, 29);
-
+```
+# Уникальные категории товаров и их количество
+```sql
 select distinct goods_type from t_tab1;
 select count(distinct goods_type) from t_tab1; 
 ```
-#2.2
+# 2.2 Суммарное количество и суммарный стоимость товаров
 ```sql select sum(amount), sum(quantity)
 from t_tab1
 where goods_type = 'mobile phone';
 ```
 
-#2.3
+# 2.3
 ```sql select name, salary
 from t_tab2
 where salary > 100000;
 ```
 
-#2.4
+# 2.4
 ```sql select min(salary), max(salary), min(age), max(age)
 from t_tab2;
 ```
 
-#2.5
+# 2.5
 ```sql select avg(quantity)
 from t_tab1
 where goods_type in ('keyboard',' printer');
 ```
 
-#2.6
+# 2.6
 ```sql select name, sum(amount)
 from t_tab1 t1
 join t_tab2 t2
 on t1.seller_name = t2.name 
 group by t2.name;
 ```
-#2.7
+# 2.7
 ``` sql select t2.name, t1.goods_type, t2.age, t2.salary, t1.quantity, t1.amount
 from t_tab1 t1
 join t_tab2 t2
@@ -134,7 +135,7 @@ on t1.seller_name = t2.name
 where name = 'MIKE';
 ```
 
-#2.8
+# 2.8
 ```sql select t2.name, t2.age
 from t_tab2 t2
  left join t_tab1 t1
@@ -142,17 +143,16 @@ on t1.SELLER_NAME = t2.NAME
 where t1.id is null;
 ```
 
-#2.9
+# 2.9
 ```sql select name ,salary, age
 from t_tab2
 where age < 26;
 ```
 
-#2.10
+# 2.10
 ```sql SELECT * FROM T_TAB1 t
 JOIN T_TAB2 t2 ON t2.name = t.seller_name
 WHERE t2.name = 'RITA';
-#0 строкuk_bankSurnameCustomer_ID 
 ```
 
 
