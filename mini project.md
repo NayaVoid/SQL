@@ -157,7 +157,7 @@ sql SELECT * FROM T_TAB1 t
 JOIN T_TAB2 t2 ON t2.name = t.seller_name
 WHERE t2.name = 'RITA';
 ```
-#1. Определение наивысшей текущей зарплаты в каждом отделе (для подсчета текущей зарплаты, используем фильтр WHERE to_date = '9999-01-01'):
+# 3.0 Определяем наивысшей текущей зарплаты в каждом отделе (для подсчета текущей зарплаты, используем фильтр WHERE to_date = '9999-01-01'):
  
  SELECT  s.emp_no, s.salary, d.dept_no, MAX(s.salary)
 OVER (PARTITION BY d.dept_no ) AS max_salary_in_dept
@@ -173,7 +173,7 @@ WHERE s.to_date = '9999-01-01'
 group by d.dept_no
 order by d.dept_no;
 
-### 3.1 Сравнение зарплаты каждого сотрудника с средней зарплатой в их отделе:
+### 3.1 Сравнили зарплаты каждого сотрудника с средней зарплатой в их отделе:
    ```sql
    select s.salary, d.dept_no, s.emp_no, avg(s.salary)
    over(partition by d.dept_no) as avg_salary_in_dept
@@ -182,7 +182,7 @@ order by d.dept_no;
    on s.emp_no = d.emp_no
    limit 100;
    ```
-   ### 3.2 Ранжирование сотрудников в отделе по стажу работы:
+   ### 3.2 Ранжируем сотрудников в отделе по стажу работы:
   ```sql
   SELECT e.emp_no, d.dept_no, e.hire_date,
        RANK() OVER (PARTITION BY d.dept_no ORDER BY e.hire_date DESC) AS experience_rank
