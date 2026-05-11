@@ -148,21 +148,64 @@ from t_tab2 t2
  left join t_tab1 t1
 on t1.SELLER_NAME = t2.NAME
 where t1.id is null;
-```
-
 ### 2.9
-```sql select name ,salary, age
+sql select name ,salary, age
 from t_tab2
 where age < 26;
-```
-
 ### 2.10
-```sql SELECT * FROM T_TAB1 t
+sql SELECT * FROM T_TAB1 t
 JOIN T_TAB2 t2 ON t2.name = t.seller_name
 WHERE t2.name = 'RITA';
 ```
+#1. Определение наивысшей текущей зарплаты в каждом отделе (для подсчета текущей зарплаты, используем фильтр WHERE to_date = '9999-01-01'):
+ 
+ SELECT  s.emp_no, s.salary, d.dept_no, MAX(s.salary)
+OVER (PARTITION BY d.dept_no ) AS max_salary_in_dept
+FROM salaries s
+JOIN dept_emp d ON s.emp_no = d.emp_no
+WHERE s.to_date = '9999-01-01';
 
+SELECT  d.dept_no, MAX(s.salary)
+AS max_salary_in_dept
+FROM salaries s
+JOIN dept_emp d ON s.emp_no = d.emp_no
+WHERE s.to_date = '9999-01-01'
+group by d.dept_no
+order by d.dept_no;
 
+### 3.1 Сравнение зарплаты каждого сотрудника с средней зарплатой в их отделе:
+   ```sql
+   select s.salary, d.dept_no, s.emp_no, avg(s.salary)
+   over(partition by d.dept_no) as avg_salary_in_dept
+   from salaries s
+   join dept_emp d
+   on s.emp_no = d.emp_no
+   limit 100;
+   ```
+   ### 3.2 Ранжирование сотрудников в отделе по стажу работы:
+  ```sql
+  SELECT e.emp_no, d.dept_no, e.hire_date,
+       RANK() OVER (PARTITION BY d.dept_no ORDER BY e.hire_date DESC) AS experience_rank
+FROM employees e
+JOIN dept_emp d
+  ON e.emp_no = d.emp_no
+  ORDER BY e.hire_date DESC
+LIMIT 100;
+```
+### 3.3 Определение начальной и последней зарплаты сотрудника:
+  #### - Цель: Узнать, какая была начальная и какая текущая зарплата у каждого сотрудника.
+  #### - Таблицы для использования: salaries (содержит информацию о зарплатах сотрудников).
+ #### - Колонки для отображения: Идентификатор сотрудника (emp_no), текущая зарплата (salary), начальная зарплата (first_salary), последняя зарплата (last_salary).
+```sql
+SELECT emp_no,
+       salary AS current_salary,
+       FIRST_VALUE(salary) OVER (PARTITION BY emp_no ORDER BY from_date) AS first_salary,
+       LAST_VALUE(salary) OVER (PARTITION BY emp_no ORDER BY from_date ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS last_salary
+FROM salaries
+WHERE to_date = '9999-01-01' 
+ORDER BY emp_no;
+
+```
 
 
 
