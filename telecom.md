@@ -1,9 +1,10 @@
-# Проект: Анализ и прогнозирование оттока клиентов телеком-оператора.Результаты в SQL: Провела финансовый анализ базы данных (7043 строки). Выявила, что компания ежемесячно теряет 30% выручки (139k) из-за оттока клиентов.Результаты в Python: Построила модель машинного обучения (Random Forest), способную предсказывать уход клиентов с точностью 63% и полнотой 51%.Инсайт: Самой критичной зоной риска определены новые клиенты на помесячной оплате с оптоволоконным интернетом (Fiber optic).
+# Проект: Анализ и прогнозирование оттока клиентов телеком-оператора.
+### Результаты в SQL: Провела финансовый анализ базы данных (7043 строки). Выявила, что компания ежемесячно теряет 30% выручки (139k) из-за оттока клиентов.Результаты в Python: Построила модель машинного обучения (Random Forest), способную предсказывать уход клиентов с точностью 63% и полнотой 51%.Инсайт: Самой критичной зоной риска определены новые клиенты на помесячной оплате с оптоволоконным интернетом (Fiber optic).
 
-	### Бизнес-задача: Снизить отток клиентов в телекоме.
-	### SQL-этап: Выгрузка данных, расчет LTV, определение финансовых потерь и когортный анализ.
-	### Python-этап: Визуализация найденных в SQL аномалий (красивые графики) и обучение ML-модели для прогнозирования.
-	### Бизнес-рекомендации:«Перевести клиентов с Fiber Optic на годовые контракты, предложив скидку, так как это снизит отток на Х%»).
+### Бизнес-задача: Снизить отток клиентов в телекоме.
+### SQL-этап: Выгрузка данных, расчет LTV, определение финансовых потерь и когортный анализ.
+### Python-этап: Визуализация найденных в SQL аномалий (красивые графики) и обучение ML-модели для прогнозирования.
+### Бизнес-рекомендации:«Перевести клиентов с Fiber Optic на годовые контракты, предложив скидку, так как это снизит отток на Х%»).
 
 select churn from telecom;
 
@@ -16,22 +17,22 @@ select churn,  count(customerID) as total_clients,
        from telecom
        group by churn;
        
-      ### У клиентов со статусом Churn = 'Yes' (ушедшие) показатель avg_lifetime_value (LTV) будет в разы ниже, чем у оставшихся.При этом их avg_monthly_bill (ежемесячный чек) будет выше, чем у лояльных клиентов.
+ ### У клиентов со статусом Churn = 'Yes' (ушедшие) показатель avg_lifetime_value (LTV) будет в разы ниже, чем у оставшихся.При этом их avg_monthly_bill (ежемесячный чек) будет выше, чем у лояльных клиентов.
        
-       SELECT customerID, tenure, MonthlyCharges,
+      ```sql SELECT customerID, tenure, MonthlyCharges,
     COALESCE(TotalCharges, 0) AS TotalCharges_clean
-FROM telecom;
+FROM telecom;```
 
-select customerID, totalcharges from telecom where totalcharges is null;
+```select customerID, totalcharges from telecom where totalcharges is null;```
 
-select
+```sql select
  ROUND(SUM(CASE WHEN churn = 'yes' THEN monthlycharges ELSE 0 END), 2) AS lost_monthly_revenue, 
     ROUND(SUM(CASE WHEN churn = 'no' THEN monthlycharges ELSE 0 END), 2) AS active_monthly_revenue, 
     ROUND((SUM(CASE WHEN churn = 'yes' THEN monthlycharges ELSE 0 END) / SUM(monthlycharges)) * 100, 2) AS lost_revenue_percent
-FROM telecom; 
+FROM telecom; ```
 
 ### 2.Анализ по времени жизни. в какой именно период клиенты уходят
-select case
+```sql select case
    when tenure<=6 then '0-6 месяцев (Новички)'
    when tenure<=12 then '7-12 месяцев (До года)'
    when tenure<=24 then '1-2года(Стабильные)'
@@ -41,10 +42,10 @@ select case
    round(avg(if(churn ='yes', 1,0))*100,2) as churn_rate
 from telecom
 group by customer_ltv
-order by churn_rate;  
+order by churn_rate;  ```
 
-### 3 Найдем идеальный профиль клиента
-SELECT 
+### 3.Найдем идеальный профиль клиента
+```sql SELECT 
     InternetService,
     Contract,
     TechSupport,
@@ -54,7 +55,7 @@ SELECT
 FROM telecom
 GROUP BY InternetService, Contract, TechSupport
 HAVING total_clients > 100 -- Смотрим только крупные, значимые сегменты
-ORDER BY avg_ltv DESC, churn_rate_percent ASC;
+ORDER BY avg_ltv DESC, churn_rate_percent ASC;```
 
 
 
