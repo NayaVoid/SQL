@@ -20,7 +20,8 @@ limit 1;
 ```
 
 ### 3 Дни с наибольшим средним количеством просмотренных рекламных обьявлении на пользователя, но учитываем только дни с более чем 500 уникальными пользователями
-```sql select dates, avg(view_adverts), count(distinct user_id)
+```sql
+select dates, avg(view_adverts), count(distinct user_id)
 from users
 group by dates
 having count(distinct user_id)> 500
@@ -29,14 +30,16 @@ limit 1;
 ```
 
 ### 4 Продолжительность присутствия пользователя на сайте
-```sql select user_id, count(distinct dates) as LT
+```sql
+select user_id, count(distinct dates) as LT
 from users
 group by user_id
 order by LT desc;
 ```
 
 ### 5 Для каждого пользователя посчитаем среднее кол. просмотренной рекламы за день, затем выясняем, у кого самый самый высокий сред. показатель среди тех, кто был активенкак мин. 5 разных дней
-```sql select user_id, avg(view_adverts), count(distinct dates)
+```sql
+ select user_id, avg(view_adverts), count(distinct dates)
 from users
 group by user_id
 having count(distinct dates) >= 5
@@ -45,7 +48,8 @@ limit 1;
 ```
 
 ### Создаем новую базу данных mini_project у которых есть 2 таблицы
-```sql create database mini_project;
+```sql
+create database mini_project;
 
 create table T_TAB1(
 ID INT,
