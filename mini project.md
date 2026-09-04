@@ -101,37 +101,43 @@ select distinct goods_type from t_tab1;
 select count(distinct goods_type) from t_tab1; 
 ```
 ### 2.2 Суммарное количество и суммарный стоимость товаров
-```sql select sum(amount), sum(quantity)
+```sql
+select sum(amount), sum(quantity)
 from t_tab1
 where goods_type = 'mobile phone';
 ```
 
 ### 2.3 Сотрудники с заработной платой > 100000
-```sql select name, salary
+```sql
+select name, salary
 from t_tab2
 where salary > 100000;
 ```
 
 ### 2.4 Сотрудники у которых мин/макс зарплата и возраст
-```sql select min(salary), max(salary), min(age), max(age)
+```sql
+select min(salary), max(salary), min(age), max(age)
 from t_tab2;
 ```
 
 ### 2.5 Среднее количество проданных клавиатур и принтеров
-```sql select avg(quantity)
+```sql
+select avg(quantity)
 from t_tab1
 where goods_type in ('keyboard',' printer');
 ```
 
 ### 2.6 Имя сотрудника и проданные ими товары
-```sql select name, sum(amount)
+```sql
+select name, sum(amount)
 from t_tab1 t1
 join t_tab2 t2
 on t1.seller_name = t2.name 
 group by t2.name;
 ```
 ### 2.7 Вся информация про Mike
-``` sql select t2.name, t1.goods_type, t2.age, t2.salary, t1.quantity, t1.amount
+``` sql
+select t2.name, t1.goods_type, t2.age, t2.salary, t1.quantity, t1.amount
 from t_tab1 t1
 join t_tab2 t2
 on t1.seller_name = t2.name 
@@ -139,17 +145,22 @@ where name = 'MIKE';
 ```
 
 ### 2.8 Сотрудники которые ничего не продали
-```sql select t2.name, t2.age
+```sql
+select t2.name, t2.age
 from t_tab2 t2
  left join t_tab1 t1
 on t1.SELLER_NAME = t2.NAME
 where t1.id is null;
+```
 ### 2.9
-sql select name ,salary, age
+```sql
+ select name ,salary, age
 from t_tab2
 where age < 26;
+```
 ### 2.10
-sql SELECT * FROM T_TAB1 t
+```sql
+ SELECT * FROM T_TAB1 t
 JOIN T_TAB2 t2 ON t2.name = t.seller_name
 WHERE t2.name = 'RITA';
 ```
