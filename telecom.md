@@ -21,11 +21,11 @@
        
  ### У клиентов со статусом Churn = 'Yes' (ушедшие) показатель avg_lifetime_value (LTV) будет в разы ниже, чем у оставшихся.При этом их avg_monthly_bill (ежемесячный чек) будет выше, чем у лояльных клиентов.
        
-      ```sql
-	  SELECT customerID, tenure, MonthlyCharges,
-    COALESCE(TotalCharges, 0) AS TotalCharges_clean
-    FROM telecom;
-      ```
+```sql
+	      SELECT customerID, tenure, MonthlyCharges,
+          COALESCE(TotalCharges, 0) AS TotalCharges_clean
+          FROM telecom
+ ```
 
 ```sql
 select customerID, totalcharges from telecom where totalcharges is null;
