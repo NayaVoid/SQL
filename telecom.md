@@ -24,8 +24,8 @@
       ```sql
 	  SELECT customerID, tenure, MonthlyCharges,
     COALESCE(TotalCharges, 0) AS TotalCharges_clean
-FROM telecom;
-```
+    FROM telecom;
+    ```
 
 ```sql
 select customerID, totalcharges from telecom where totalcharges is null;
